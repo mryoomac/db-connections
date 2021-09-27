@@ -3,9 +3,6 @@ import { ObjectId } from 'mongoose';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 
-
-
-
 @Controller('products')
 export class ProductController {
     constructor(private productService: ProductService) {

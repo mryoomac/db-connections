@@ -9,7 +9,6 @@ import { response } from 'express';
 @Injectable()
 export class ProductService {
 
-
     constructor(
         @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>
     ) {
@@ -32,9 +31,6 @@ export class ProductService {
     async deleteById(setId){
         await this.productModel.deleteOne(setId);
     }
-
-
-
 
 }
 
