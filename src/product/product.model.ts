@@ -1,13 +1,11 @@
 import { Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export type ProductDocument = Product & Document;
 
+
 @Schema()
 export class Product {
-    @Prop()
-    _id: string;
-
     @Prop()
     title: string;
 

@@ -1,22 +1,33 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Post } from '@nestjs/common';
+import { ObjectId } from 'mongoose';
+import { Product } from './product.model';
 import { ProductService } from './product.service';
+
+
+
 
 @Controller('products')
 export class ProductController {
     constructor(private productService: ProductService) {
     }
 
-
-
     @Get()
-    async all(){ 
-        return this.productService.all();
+    async getAll(){ 
+        return this.productService.getAll();
     }
 
-    async collectionShow(){
-        
+    async getById(setId: string){
+        return this.productService.getById(setId);
     }
 
+    @Post()
+    async addNewProduct(setTitle: string, setImage: string, setCategory: string){
+        await this.productService.create(setTitle, setImage, setCategory);
+        }
 
-  
+    @Delete()
+    async deleteById(setId: string){
+        return this.productService.deleteById(setId);
+    }
+
 }
