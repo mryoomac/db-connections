@@ -3,34 +3,34 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from "./product.model";
 import { Model, Mongoose, Schema, connect} from "mongoose";
 import { response } from 'express';
+import { ProductRepository } from './product.repository';
 
 
 
 @Injectable()
 export class ProductService {
 
-    constructor(
-        @InjectModel(Product.name) private readonly productModel: Model<ProductDocument>
-    ) {
-        
+  constructor(
+    private repository: ProductRepository
+    ) {   
     }
 
-    async getAll() {
-        return this.productModel.find().exec();
-    }
+  async getAll(){
+    return this.repository.find();
+  }
 
-    async getById(id: string) {
-        return this.productModel.findById(id);
-    }
+  async getById(id: string):Promise<Product> {
+    return this.repository.findById(id);
+  }
 
-    async create(setTitle: string, setImage: string, setCategory: string){
-        const b = await this.productModel.create([{title:setTitle, image:setImage, category:setCategory}]);
-        console.log(b);
-    }
-
-    async deleteById(setId){
-        await this.productModel.deleteOne(setId);
-    }
+  async create(setTitle: string, setImage: string, setCategory: string){
+    const b = await this.repository.save({title:setTitle, image:setImage, category:setCategory});
+      console.log(b);
+  }
+///:Promise<Product> Void Any
+  async deleteById(setId) {
+    await this.repository.deleteOne(setId);
+  }
 
 }
 
