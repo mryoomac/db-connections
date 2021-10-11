@@ -4,14 +4,12 @@ import { User } from "./user.model";
 
 export class UserRepository{
 
-
   constructor(@InjectModel('User') private readonly userModel: Model<User>){}
 
-    save(Object: object){
+    async save(Object: object){
       const user = new this.userModel(Object);
-        user.save();
-        return (Object);
-        
+      await user.save();
+      return (Object);
+       
     }
-
 }

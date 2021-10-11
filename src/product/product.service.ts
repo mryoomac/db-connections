@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Product, ProductDocument } from "./product.model";
-import { Model, Mongoose, Schema, connect} from "mongoose";
-import { response } from 'express';
+import { Product } from "./product.model";
 import { ProductRepository } from './product.repository';
-
-
+import { CreateProductDto } from './create-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -15,22 +11,21 @@ export class ProductService {
     ) {   
     }
 
-  async getAll(){
+  async getAll(): Promise<Product[]>{
     return this.repository.find();
   }
 
-  async getById(id: string):Promise<Product> {
+  async getById(id: string): Promise<Product> {
     return this.repository.findById(id);
   }
 
-  async create(setTitle: string, setImage: string, setCategory: string){
-    const b = await this.repository.save({title:setTitle, image:setImage, category:setCategory});
-      console.log(b);
-  }
-///:Promise<Product> Void Any
-  async deleteById(setId) {
-    await this.repository.deleteOne(setId);
+  async create(dto : CreateProductDto): Promise<Product>{
+    const b = await this.repository.save(dto);
+    return b;
   }
 
+  async deleteById(id: string): Promise<Product> {
+    return this.repository.deleteOne(id);
+  }
 }
 

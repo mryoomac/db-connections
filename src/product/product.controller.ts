@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Post } from '@nestjs/common';
-import { ObjectId } from 'mongoose';
+import { CreateProductDto } from './create-product.dto';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 
@@ -8,23 +8,23 @@ export class ProductController {
   constructor(private productService: ProductService) {
   }
 
-  @Get()
-    async getAll(){ 
-      return this.productService.getAll();
-    }
+@Get()
+async getAll(){ 
+  return this.productService.getAll();
+  }
 
-    async getById(setId: string){
-      return this.productService.getById(setId);
-    }
+@Get()
+async getById(id: string): Promise<Product>{
+  return this.productService.getById(id);
+  }
 
-    /// createProductDto - setTitle: string, setImage: string, setCategory: string
-  @Post()
-    async addNewProduct(setTitle: string, setImage: string, setCategory: string){
-      await this.productService.create(setTitle, setImage, setCategory);
-    }
+@Post()
+async addNewProduct(dto : CreateProductDto): Promise<Product>{
+  return this.productService.create(dto);
+  }
 
-  @Delete()
-    async deleteById(setId: string){
-      return this.productService.deleteById(setId);
-    }
+@Delete()
+async deleteById(id: string): Promise<Product>{
+  return this.productService.deleteById(id);
+  }
 }

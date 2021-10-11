@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from "./user.model";
-import { Model, Mongoose, Schema, connect} from "mongoose";
-import { response } from 'express';
 import { UserRepository } from './user.repository';
-
+import { CreateUserDto } from './create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -14,11 +10,8 @@ export class UserService {
     ) {
     }
 
-    createNewUser(nazwa: string, wiek:string){
-      this.repository.save({name:nazwa, age:wiek});
-        return nazwa;
-    }
-
-
-    
+    async createNewUser(dto: CreateUserDto){
+      await this.repository.save(dto);
+      return dto;
+    }   
 }
