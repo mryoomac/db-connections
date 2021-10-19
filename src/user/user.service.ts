@@ -9,7 +9,7 @@ export class UserService {
 
   async createNewUser(dto: CreateUserDto): Promise<User> {
     if (!dto.password) {
-      console.log('Podaj hasło');
+      console.log('no password specified');
       return;
     }
     if (
@@ -18,7 +18,7 @@ export class UserService {
       )
     ) {
       console.log(
-        'Za mało liter, brak dużej lub małej, brak znaku specjalnego',
+        'Password requirements not met',
       );
       return;
     }

@@ -7,13 +7,25 @@ export class UserRepository {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
   async save(obj: CreateUserDto): Promise<User> {
-    obj.token = 'podmiana';
+    obj.token = 'changetoken'; 
     const user = new this.userModel(obj);
     console.log(user);
     return user.save();
   }
 
   async find(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return this.userModel
+      .find().exec();
   }
+
+  async login(login: string, password: string): Promise<User> {
+    const user = await this.userModel.findOne({login});
+    if (user && user.password === password){
+      const { password, ...result } = user;
+      console.log (user.token);
+      return user;
+    } 
+    return null;
+  }
+
 }
