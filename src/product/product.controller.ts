@@ -1,30 +1,30 @@
-import { Controller, Delete, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateProductDto } from './create-product.dto';
 import { Product } from './product.model';
 import { ProductService } from './product.service';
 
 @Controller('products')
 export class ProductController {
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService) {}
+
+  @Get('/getall')
+  async getAll() {
+    return this.productService.getAll();
   }
 
-@Get()
-async getAll(){ 
-  return this.productService.getAll();
+  @Get('/getbyid')
+  async getById(@Body() id: string): Promise<Product> {
+    return this.productService.getById(id);
   }
 
-@Get()
-async getById(id: string): Promise<Product>{
-  return this.productService.getById(id);
+  @Post()
+  async addNewProduct(@Body() dto: CreateProductDto): Promise<Product> {
+    console.log(dto);
+    return this.productService.create(dto);
   }
 
-@Post()
-async addNewProduct(dto : CreateProductDto): Promise<Product>{
-  return this.productService.create(dto);
-  }
-
-@Delete()
-async deleteById(id: string): Promise<Product>{
-  return this.productService.deleteById(id);
+  @Delete('/delete')
+  async deleteById(@Body() id: string): Promise<Product> {
+    return this.productService.deleteById(id);
   }
 }

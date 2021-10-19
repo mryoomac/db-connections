@@ -1,17 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { Product } from "./product.model";
+import { Body, Injectable, Param } from '@nestjs/common';
+import { Product } from './product.model';
 import { ProductRepository } from './product.repository';
 import { CreateProductDto } from './create-product.dto';
 
 @Injectable()
 export class ProductService {
+  constructor(private repository: ProductRepository) {}
 
-  constructor(
-    private repository: ProductRepository
-    ) {   
-    }
-
-  async getAll(): Promise<Product[]>{
+  async getAll(): Promise<Product[]> {
     return this.repository.find();
   }
 
@@ -19,8 +15,8 @@ export class ProductService {
     return this.repository.findById(id);
   }
 
-  async create(dto : CreateProductDto): Promise<Product>{
-    const b = await this.repository.save(dto);
+  async create(dto: CreateProductDto): Promise<Product> {
+    const b = await this.repository.saveProduct(dto);
     return b;
   }
 
@@ -28,4 +24,3 @@ export class ProductService {
     return this.repository.deleteOne(id);
   }
 }
-
