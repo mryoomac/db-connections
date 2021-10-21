@@ -17,9 +17,7 @@ export class UserService {
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
       )
     ) {
-      console.log(
-        'Password requirements not met',
-      );
+      console.log('Password requirements not met');
       return;
     }
     const userInstance = await this.repository.save(dto);
@@ -30,7 +28,7 @@ export class UserService {
     return this.repository.find();
   }
 
-  async login(login: string, password: string): Promise<User> {
-    return this.repository.login(login, password);
+  async getNewToken(login: string, password: string): Promise<String | null> {
+    return this.repository.getNewToken(login, password);
   }
 }

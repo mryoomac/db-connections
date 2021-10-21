@@ -1,4 +1,4 @@
-import { Body, Injectable, Param } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Product } from './product.model';
 import { ProductRepository } from './product.repository';
 import { CreateProductDto } from './create-product.dto';

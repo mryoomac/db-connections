@@ -9,8 +9,6 @@ export class User extends Document {
   login: string;
   @Prop()
   password: string;
-  @Prop()
-  token: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

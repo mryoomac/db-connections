@@ -1,5 +1,5 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { Collection, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateProductDto } from './create-product.dto';
 import { Product } from './product.model';
 

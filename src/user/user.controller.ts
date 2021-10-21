@@ -18,7 +18,7 @@ export class UserController {
   }
 
   @Post('/login')
-  async login(@Body() login: string, password: string): Promise<User> {
-    return this.userService.login(login, password);
+  async loginUser(@Body() { login, password }): Promise<String | null> {
+    return this.userService.getNewToken(login, password);
   }
 }
