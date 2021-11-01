@@ -9,8 +9,7 @@ export class ProductRepository {
   ) {}
 
   async saveProduct(obj: CreateProductDto): Promise<Product> {
-    const product = new this.productModel(obj);
-    return product.save();
+    return new this.productModel(obj).save();
   }
 
   async findById(id: string): Promise<Product> {

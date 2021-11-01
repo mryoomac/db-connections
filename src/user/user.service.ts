@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { CreateUserDto } from './create-user.dto';
 import { User } from './user.model';
@@ -8,27 +8,16 @@ export class UserService {
   constructor(private repository: UserRepository) {}
 
   async createNewUser(dto: CreateUserDto): Promise<User> {
-    if (!dto.password) {
-      console.log('no password specified');
-      return;
-    }
-    if (
-      !dto.password.match(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
-      )
-    ) {
-      console.log('Password requirements not met');
-      return;
-    }
-    const userInstance = await this.repository.save(dto);
-    return userInstance;
+    dto.password = await this.repository.hash(dto);
+    console.log(`hashzserwisu: ${dto.password}`);
+    return await this.repository.save(dto);
   }
 
   async getAll(): Promise<User[]> {
     return this.repository.find();
   }
 
-  async getNewToken(login: string, password: string): Promise<String | null> {
+  async getNewToken(login: string, password: string): Promise<string> {
     return this.repository.getNewToken(login, password);
   }
 }
