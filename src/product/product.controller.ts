@@ -33,8 +33,8 @@ export class ProductController {
     return this.productService.create(dto);
   }
 
-  @Delete('/delete')
-  async deleteById(@Body() id: string): Promise<Product> {
+  @Delete('/:id')
+  async deleteById(@Body('id') id: string): Promise<Product> {
     return this.productService.deleteById(id);
   }
 }
